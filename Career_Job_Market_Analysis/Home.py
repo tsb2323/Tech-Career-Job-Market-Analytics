@@ -1,9 +1,6 @@
 import streamlit as st
 import pandas as pd
-import os
 
-st.write(os.getcwd())
-st.write(os.listdir())
 
 # -------------------------------
 # Page Configuration
