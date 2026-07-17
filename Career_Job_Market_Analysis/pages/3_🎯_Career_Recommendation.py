@@ -15,14 +15,18 @@ st.set_page_config(
 # LOAD DATA
 # ==========================================
 
+from pathlib import Path
+
 @st.cache_data
 def load_data():
-    df = pd.read_csv("Cleaned_Project_DataSet.csv")
+    BASE_DIR = Path(__file__).resolve().parent
+    DATA_PATH = BASE_DIR.parent / "Cleaned_Project_DataSet.csv"
+
+    df = pd.read_csv(DATA_PATH)
     df.columns = df.columns.str.strip()
     return df
 
 df = load_data()
-
 # ==========================================
 # TITLE
 # ==========================================

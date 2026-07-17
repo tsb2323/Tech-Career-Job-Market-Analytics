@@ -13,8 +13,14 @@ st.set_page_config(
 # -------------------------------
 # Load Dataset
 # -------------------------------
-df = pd.read_csv("Cleaned_Project_DataSet.csv")
 
+from pathlib import Path
+import pandas as pd
+
+BASE_DIR = Path(__file__).resolve().parent
+DATA_PATH = BASE_DIR / "Cleaned_Project_DataSet.csv"
+
+df = pd.read_csv(DATA_PATH)
 # -------------------------------
 # Header
 # -------------------------------

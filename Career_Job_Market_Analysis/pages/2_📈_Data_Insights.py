@@ -17,9 +17,13 @@ st.set_page_config(
 # ==========================================
 # LOAD DATASET
 # ==========================================
+from pathlib import Path
+import pandas as pd
 
-df = pd.read_csv("Cleaned_Project_DataSet.csv")
+BASE_DIR = Path(__file__).resolve().parent
+DATA_PATH = BASE_DIR.parent / "Cleaned_Project_DataSet.csv"
 
+df = pd.read_csv(DATA_PATH)
 # ==========================================
 # PAGE TITLE
 # ==========================================
