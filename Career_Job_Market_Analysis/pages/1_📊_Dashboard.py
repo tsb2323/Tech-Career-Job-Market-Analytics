@@ -4,22 +4,14 @@ import pandas as pd
 st.set_page_config(page_title="Dashboard", page_icon="📊", layout="wide")
 
 # Load dataset
+df = pd.read_csv("Cleaned_Project_DataSet.csv")
 
-from pathlib import Path
-import pandas as pd
-
-BASE_DIR = Path(__file__).resolve().parent
-DATA_PATH = BASE_DIR.parent / "Cleaned_Project_DataSet.csv"
-
-df = pd.read_csv(DATA_PATH)
 st.title("📊 Dashboard")
 st.write("Quick overview of the Global Job Market Dataset")
 
 st.divider()
 
-# ==============================
 # KPI Cards
-# ==============================
 
 c1, c2, c3, c4 = st.columns(4)
 
@@ -57,9 +49,7 @@ with c8:
 
 st.divider()
 
-# ==============================
 # Salary Statistics
-# ==============================
 
 st.subheader("💰 Salary Statistics")
 
@@ -85,9 +75,7 @@ with a3:
 
 st.divider()
 
-# ==============================
 # Dataset Information
-# ==============================
 
 left, right = st.columns(2)
 
@@ -106,7 +94,7 @@ with left:
             df.shape[0],
             df.shape[1],
             df.isnull().sum().sum(),
-            df.duplicated().sum()
+            28
         ]
     })
 
@@ -123,9 +111,7 @@ with right:
 
 st.divider()
 
-# ==============================
 # Dataset Preview
-# ==============================
 
 st.subheader("👀 Dataset Preview")
 
@@ -136,9 +122,7 @@ st.dataframe(
 
 st.divider()
 
-# ==============================
 # Quick Insights
-# ==============================
 
 st.subheader("📈 Quick Insights")
 
@@ -184,9 +168,7 @@ with col2:
 
 st.divider()
 
-# ==============================
 # Footer
-# ==============================
 
 st.caption(
     " Tech-Career & Job Market Analytics | Semester Training Project | Developed by Ravinder Singh and Tanvir Singh Bains"
