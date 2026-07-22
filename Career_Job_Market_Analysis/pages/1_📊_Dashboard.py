@@ -4,7 +4,13 @@ import pandas as pd
 st.set_page_config(page_title="Dashboard", page_icon="📊", layout="wide")
 
 # Load dataset
-df = pd.read_csv("Cleaned_Project_DataSet.csv")
+from pathlib import Path
+import pandas as pd
+
+BASE_DIR = Path(__file__).resolve().parent
+DATA_PATH = BASE_DIR.parent / "Cleaned_Project_DataSet.csv"
+
+df = pd.read_csv(DATA_PATH)
 
 st.title("📊 Dashboard")
 st.write("Quick overview of the Global Job Market Dataset")
