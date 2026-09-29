@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
+from pathlib import Path
 
 
 # -------------------------------
 # Page Configuration
-# -------------------------------Career Market Analysis Dashboard
-
+# -------------------------------
 
 st.set_page_config(
     page_title="Tech-Career & Job Market Analytics",
@@ -57,8 +57,10 @@ def welcome_popup():
     )
 
     # Samurai image
+    IMAGE_PATH = Path(__file__).resolve().parent / "welcome_samurai.png"
+
     st.image(
-        "welcome_samurai.png",
+        str(IMAGE_PATH),
         use_container_width=True
     )
 
@@ -99,21 +101,23 @@ if "welcome_closed" not in st.session_state:
 if not st.session_state["welcome_closed"]:
     welcome_popup()
 
-# -------------------------------
-# Load Dataset
-# -------------------------------
 
-from pathlib import Path
-import pandas as pd
+# ==========================================
+# LOAD DATASET
+# ==========================================
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_PATH = BASE_DIR / "Cleaned_Project_DataSet.csv"
 
 df = pd.read_csv(DATA_PATH)
-# -------------------------------
-# Header
-# -------------------------------
+
+
+# ==========================================
+# HEADER
+# ==========================================
+
 st.title("📊 Tech-Career & Job Market Analytics")
+
 st.markdown(
     """
 Welcome to the **Tech-Career & Job Market Analytics**.
@@ -125,9 +129,11 @@ career trends, salary distribution, education impact, company size, and employme
 
 st.divider()
 
-# -------------------------------
-# KPI Cards
-# -------------------------------
+
+# ==========================================
+# KPI CARDS
+# ==========================================
+
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
@@ -142,18 +148,22 @@ with col3:
 with col4:
     st.metric("📄 Total Records", f"{len(df):,}")
 
+
 st.divider()
 
-# -------------------------------
-# Project Information
-# -------------------------------
+
+# ==========================================
+# PROJECT INFORMATION
+# ==========================================
+
 col1, col2 = st.columns(2)
 
 with col1:
 
     st.subheader("🎯 Project Objective")
 
-    st.write("""
+    st.write(
+        """
 The objective of this project is to analyze the global job market using
 interactive data visualization techniques.
 
@@ -166,13 +176,16 @@ This dashboard helps understand:
 - Employment type distribution
 - Country-wise job market analysis
 - Occupation insights
-""")
+"""
+    )
+
 
 with col2:
 
     st.subheader("🛠 Technologies Used")
 
-    st.write("""
+    st.write(
+        """
 - Python
 - Pandas
 - Plotly
@@ -181,20 +194,25 @@ with col2:
 - Matplotlib
 - Seaborn
 - VS Code
-""")
+"""
+    )
+
 
 st.divider()
 
-# -------------------------------
-# Dataset Information
-# -------------------------------
+
+# ==========================================
+# DATASET INFORMATION
+# ==========================================
+
 col1, col2 = st.columns(2)
 
 with col1:
 
     st.subheader("📁 Dataset Information")
 
-    st.info("""
+    st.info(
+        """
 **Dataset Name**
 
 Global Job Market Dataset
@@ -210,13 +228,16 @@ Kaggle
 **Records**
 
 500,000+
-""")
+"""
+    )
+
 
 with col2:
 
     st.subheader("📋 Dataset Columns")
 
-    st.code("""
+    st.code(
+        """
 Country
 City
 Occupation
@@ -228,20 +249,25 @@ Education_level
 Gender
 Company_size
 Year
-""")
+"""
+    )
+
 
 st.divider()
 
-# -------------------------------
-# Features
-# -------------------------------
+
+# ==========================================
+# FEATURES
+# ==========================================
+
 st.subheader("✨ Dashboard Features")
 
 feature1, feature2, feature3 = st.columns(3)
 
 with feature1:
 
-    st.success("""
+    st.success(
+        """
 📊 Dashboard
 
 • KPI Cards
@@ -249,11 +275,14 @@ with feature1:
 • Dataset Overview
 
 • Quick Statistics
-""")
+"""
+    )
+
 
 with feature2:
 
-    st.success("""
+    st.success(
+        """
 📈 Data Insights
 
 • Interactive Graphs
@@ -263,11 +292,14 @@ with feature2:
 • Country Analysis
 
 • Education Analysis
-""")
+"""
+    )
+
 
 with feature3:
 
-    st.success("""
+    st.success(
+        """
 🔍 Dataset Explorer
 
 • Filter Dataset
@@ -275,16 +307,21 @@ with feature3:
 • Search Records
 
 • Download CSV
-""")
+"""
+    )
+
 
 st.divider()
 
-# -------------------------------
-# Navigation
-# -------------------------------
+
+# ==========================================
+# NAVIGATION
+# ==========================================
+
 st.subheader("🧭 Navigation")
 
-st.info("""
+st.info(
+    """
 Use the **sidebar** to explore different sections of the dashboard.
 
 📊 Dashboard
@@ -295,26 +332,32 @@ Use the **sidebar** to explore different sections of the dashboard.
 
 📄 Project Summary
 
-🎯 Career Recommendation (Coming Soon)
-""")
+🎯 Career Recommendation
+"""
+)
+
 
 st.divider()
 
-# -------------------------------
-# About
-# -------------------------------
+
+# ==========================================
+# ABOUT
+# ==========================================
+
 col1, col2 = st.columns(2)
 
 with col1:
 
     st.subheader("👨‍💻 Developed By")
 
-    st.write("""
-**Ravinder Singh  and  Tanvir Singh Bains**
-             
+    st.write(
+        """
+**Ravinder Singh and Tanvir Singh Bains**
+
 **Roll No. - 2449465 and 2449475**
-             
+
 B.Tech CSE (Data Science)
 
 Semester Training Project
-""")
+"""
+    )
