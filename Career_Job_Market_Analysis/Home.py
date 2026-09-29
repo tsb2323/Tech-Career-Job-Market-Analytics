@@ -28,7 +28,7 @@ def welcome_popup():
             width: 90vw !important;
             max-width: 1400px !important;
 
-            height: 85vh !important;
+            height: 75vh !important;
             max-height: 90vh !important;
         }
 
