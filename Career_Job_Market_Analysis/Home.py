@@ -18,21 +18,88 @@ st.set_page_config(
 # WELCOME POPUP
 # ==========================================
 
-@st.dialog("🎯 Welcome!")
+# ==========================================
+# STYLISH WELCOME POPUP
+# ==========================================
+
+@st.dialog(" ")
 def welcome_popup():
 
     st.markdown(
         """
-        <div style="text-align:center;">
+        <style>
 
-        <h1>👋 Welcome!</h1>
+        .welcome-box {
+            text-align: center;
+            padding: 10px 10px 5px 10px;
+        }
 
-        <h2>Tech-Career & Job Market Analytics</h2>
+        .welcome-icon {
+            font-size: 65px;
+            margin-bottom: 5px;
+        }
 
-        <p>
-        Explore career trends, job-market insights,
-        salaries and personalized career recommendations.
-        </p>
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, #4F46E5, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-subtitle {
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .welcome-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .feature-box {
+            background: rgba(79, 70, 229, 0.08);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 6px 0;
+            font-size: 14px;
+        }
+
+        </style>
+
+        <div class="welcome-box">
+
+            <div class="welcome-icon">📊</div>
+
+            <div class="welcome-title">
+                Welcome!
+            </div>
+
+            <div class="welcome-subtitle">
+                Tech-Career & Job Market Analytics
+            </div>
+
+            <div class="welcome-text">
+                Explore the latest insights from the tech job market,
+                discover career trends, analyze salaries and find
+                career opportunities based on your profile.
+            </div>
+
+            <div class="feature-box">
+                📈 <b>Job Market Insights</b>
+            </div>
+
+            <div class="feature-box">
+                💰 <b>Salary & Career Trends</b>
+            </div>
+
+            <div class="feature-box">
+                🎯 <b>Career Recommendations</b>
+            </div>
 
         </div>
         """,
@@ -42,10 +109,9 @@ def welcome_popup():
     st.write("")
 
     if st.button(
-        "🚀 Start Exploring",
+        "🚀  Start Exploring",
         use_container_width=True
     ):
-
         st.session_state["welcome_closed"] = True
         st.rerun()
 
@@ -55,12 +121,9 @@ def welcome_popup():
 # ==========================================
 
 if "welcome_closed" not in st.session_state:
-
     st.session_state["welcome_closed"] = False
 
-
 if not st.session_state["welcome_closed"]:
-
     welcome_popup()
 
 # -------------------------------
