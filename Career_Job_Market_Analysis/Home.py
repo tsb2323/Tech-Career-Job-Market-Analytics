@@ -5,11 +5,63 @@ import pandas as pd
 # -------------------------------
 # Page Configuration
 # -------------------------------Career Market Analysis Dashboard
+
+
 st.set_page_config(
-    page_title="",
+    page_title="Tech-Career & Job Market Analytics",
     page_icon="📊",
     layout="wide"
 )
+
+
+# ==========================================
+# WELCOME POPUP
+# ==========================================
+
+@st.dialog("🎯 Welcome!")
+def welcome_popup():
+
+    st.markdown(
+        """
+        <div style="text-align:center;">
+
+        <h1>👋 Welcome!</h1>
+
+        <h2>Tech-Career & Job Market Analytics</h2>
+
+        <p>
+        Explore career trends, job-market insights,
+        salaries and personalized career recommendations.
+        </p>
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.write("")
+
+    if st.button(
+        "🚀 Start Exploring",
+        use_container_width=True
+    ):
+
+        st.session_state["welcome_closed"] = True
+        st.rerun()
+
+
+# ==========================================
+# SHOW POPUP
+# ==========================================
+
+if "welcome_closed" not in st.session_state:
+
+    st.session_state["welcome_closed"] = False
+
+
+if not st.session_state["welcome_closed"]:
+
+    welcome_popup()
 
 # -------------------------------
 # Load Dataset
