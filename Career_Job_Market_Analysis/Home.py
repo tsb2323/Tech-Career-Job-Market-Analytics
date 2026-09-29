@@ -18,10 +18,6 @@ st.set_page_config(
 # WELCOME POPUP
 # ==========================================
 
-# ==========================================
-# STYLISH WELCOME POPUP
-# ==========================================
-
 @st.dialog(" ")
 def welcome_popup():
 
@@ -29,84 +25,61 @@ def welcome_popup():
         """
         <style>
 
-        .welcome-box {
-            text-align: center;
-            padding: 10px 10px 5px 10px;
-        }
-
-        .welcome-icon {
-            font-size: 65px;
-            margin-bottom: 5px;
-        }
-
         .welcome-title {
+            text-align: center;
             font-size: 32px;
-            font-weight: 700;
+            font-weight: 800;
+            margin-top: -10px;
             margin-bottom: 5px;
-            background: linear-gradient(90deg, #4F46E5, #06B6D4);
+            background: linear-gradient(90deg, #ff4b4b, #ff8c00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .welcome-subtitle {
-            font-size: 19px;
+            text-align: center;
+            font-size: 17px;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
-        .welcome-text {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .feature-box {
-            background: rgba(79, 70, 229, 0.08);
-            border-radius: 12px;
-            padding: 12px;
-            margin: 6px 0;
+        .welcome-description {
+            text-align: center;
             font-size: 14px;
+            line-height: 1.6;
+            color: #777;
+            margin-bottom: 15px;
         }
 
         </style>
-
-        <div class="welcome-box">
-
-            <div class="welcome-icon">📊</div>
-
-            <div class="welcome-title">
-                Welcome!
-            </div>
-
-            <div class="welcome-subtitle">
-                Tech-Career & Job Market Analytics
-            </div>
-
-            <div class="welcome-text">
-                Explore the latest insights from the tech job market,
-                discover career trends, analyze salaries and find
-                career opportunities based on your profile.
-            </div>
-
-            <div class="feature-box">
-                📈 <b>Job Market Insights</b>
-            </div>
-
-            <div class="feature-box">
-                💰 <b>Salary & Career Trends</b>
-            </div>
-
-            <div class="feature-box">
-                🎯 <b>Career Recommendations</b>
-            </div>
-
-        </div>
         """,
         unsafe_allow_html=True
     )
 
-    st.write("")
+    # Samurai image
+    st.image(
+        "welcome_samurai.png",
+        use_container_width=True
+    )
+
+    st.markdown(
+        """
+        <div class="welcome-title">
+            ⚔️ Welcome!
+        </div>
+
+        <div class="welcome-subtitle">
+            Tech-Career & Job Market Analytics
+        </div>
+
+        <div class="welcome-description">
+            Explore job-market trends, salary insights,
+            career opportunities and personalized
+            career recommendations.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     if st.button(
         "🚀  Start Exploring",
