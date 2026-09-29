@@ -25,7 +25,7 @@ def welcome_popup():
         <style>
 
         div[data-testid="stDialog"] > div {
-            width: 100vw !important;
+            width: 80vw !important;
             max-width: 1400px !important;
 
             height: 100vh !important;
