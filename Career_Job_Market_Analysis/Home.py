@@ -15,7 +15,7 @@ st.set_page_config(
 
 
 # ==========================================
-# WELCOME POPUP
+# FULL-SCREEN WELCOME POPUP
 # ==========================================
 
 @st.dialog(" ")
@@ -25,30 +25,21 @@ def welcome_popup():
         """
         <style>
 
-        .welcome-title {
-            text-align: center;
-            font-size: 32px;
-            font-weight: 800;
-            margin-top: -10px;
-            margin-bottom: 5px;
-            background: linear-gradient(90deg, #ff4b4b, #ff8c00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Make the popup almost full screen */
+        div[data-testid="stDialog"] > div {
+            width: 95vw !important;
+            max-width: 1500px !important;
+            height: 95vh !important;
         }
 
-        .welcome-subtitle {
-            text-align: center;
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 15px;
+        /* Remove dialog heading */
+        div[data-testid="stDialog"] h2 {
+            display: none;
         }
 
-        .welcome-description {
-            text-align: center;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #777;
-            margin-bottom: 15px;
+        /* Remove extra top spacing */
+        div[data-testid="stDialog"] > div > div {
+            padding-top: 5px !important;
         }
 
         </style>
@@ -64,25 +55,7 @@ def welcome_popup():
         use_container_width=True
     )
 
-    st.markdown(
-        """
-        <div class="welcome-title">
-            ⚔️ Welcome!
-        </div>
-
-        <div class="welcome-subtitle">
-            Tech-Career & Job Market Analytics
-        </div>
-
-        <div class="welcome-description">
-            Explore job-market trends, salary insights,
-            career opportunities and personalized
-            career recommendations.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
+    # Start Exploring button
     if st.button(
         "🚀  Start Exploring",
         use_container_width=True
