@@ -15,79 +15,24 @@ st.set_page_config(
 
 
 # ==========================================
-# FULL SCREEN WELCOME POPUP
+# WELCOME POPUP
 # ==========================================
 
 @st.dialog(" ")
 def welcome_popup():
 
-    st.markdown(
-        """
-        <style>
-
-        /* Make dialog large */
-        div[data-testid="stDialog"] > div {
-            width: 96vw !important;
-            max-width: 1600px !important;
-            height: 94vh !important;
-            max-height: 94vh !important;
-            padding: 10px 20px 20px 20px !important;
-        }
-
-        /* Hide dialog title */
-        div[data-testid="stDialog"] h2 {
-            display: none !important;
-        }
-
-        /* Remove unnecessary spacing */
-        div[data-testid="stDialog"] > div > div {
-            padding-top: 0px !important;
-        }
-
-        /* Image container */
-        .samurai-image {
-            width: 100%;
-            max-height: 82vh;
-            object-fit: contain;
-            display: block;
-            margin: 0 auto;
-            border-radius: 12px;
-        }
-
-        /* Button styling */
-        .stButton {
-            margin-top: 8px;
-        }
-
-        .stButton > button {
-            height: 52px;
-            font-size: 18px;
-            font-weight: 700;
-            border-radius: 12px;
-        }
-
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # ------------------------------------------
-    # Samurai Image
-    # ------------------------------------------
-
+    # Find the image in the same folder as Home.py
     IMAGE_PATH = Path(__file__).resolve().parent / "welcome_samurai.png"
 
+    # Display welcome image
     st.image(
         str(IMAGE_PATH),
         use_container_width=True
     )
 
-    # ------------------------------------------
-    # Start Exploring Button
-    # ------------------------------------------
-
+    # Real clickable Streamlit button
     if st.button(
-        "🚀  Start Exploring",
+        "🚀 Start Exploring",
         use_container_width=True
     ):
         st.session_state["welcome_closed"] = True
@@ -95,16 +40,13 @@ def welcome_popup():
 
 
 # ==========================================
-# SHOW POPUP
+# SHOW WELCOME POPUP
 # ==========================================
 
 if "welcome_closed" not in st.session_state:
-
     st.session_state["welcome_closed"] = False
 
-
 if not st.session_state["welcome_closed"]:
-
     welcome_popup()
 
 
