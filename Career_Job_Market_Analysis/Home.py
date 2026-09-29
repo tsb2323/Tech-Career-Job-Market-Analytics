@@ -20,6 +20,29 @@ st.set_page_config(
 
 @st.dialog(" ")
 def welcome_popup():
+    st.markdown(
+        """
+        <style>
+
+        div[data-testid="stDialog"] > div {
+            width: 90vw !important;
+            max-width: 1400px !important;
+
+            height: 85vh !important;
+            max-height: 90vh !important;
+        }
+
+        /* Hide dialog title */
+        div[data-testid="stDialog"] h2 {
+            display: none !important;
+        }
+
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+
 
     # Find the image in the same folder as Home.py
     IMAGE_PATH = Path(__file__).resolve().parent / "welcome_samurai.png"
