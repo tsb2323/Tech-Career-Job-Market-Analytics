@@ -15,7 +15,7 @@ st.set_page_config(
 
 
 # ==========================================
-# FULL-SCREEN WELCOME POPUP
+# FULL SCREEN WELCOME POPUP
 # ==========================================
 
 @st.dialog(" ")
@@ -25,21 +25,45 @@ def welcome_popup():
         """
         <style>
 
-        /* Make the popup almost full screen */
+        /* Make dialog large */
         div[data-testid="stDialog"] > div {
-            width: 95vw !important;
-            max-width: 1500px !important;
-            height: 95vh !important;
+            width: 96vw !important;
+            max-width: 1600px !important;
+            height: 94vh !important;
+            max-height: 94vh !important;
+            padding: 10px 20px 20px 20px !important;
         }
 
-        /* Remove dialog heading */
+        /* Hide dialog title */
         div[data-testid="stDialog"] h2 {
-            display: none;
+            display: none !important;
         }
 
-        /* Remove extra top spacing */
+        /* Remove unnecessary spacing */
         div[data-testid="stDialog"] > div > div {
-            padding-top: 5px !important;
+            padding-top: 0px !important;
+        }
+
+        /* Image container */
+        .samurai-image {
+            width: 100%;
+            max-height: 82vh;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            border-radius: 12px;
+        }
+
+        /* Button styling */
+        .stButton {
+            margin-top: 8px;
+        }
+
+        .stButton > button {
+            height: 52px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 12px;
         }
 
         </style>
@@ -47,7 +71,10 @@ def welcome_popup():
         unsafe_allow_html=True
     )
 
-    # Samurai image
+    # ------------------------------------------
+    # Samurai Image
+    # ------------------------------------------
+
     IMAGE_PATH = Path(__file__).resolve().parent / "welcome_samurai.png"
 
     st.image(
@@ -55,7 +82,10 @@ def welcome_popup():
         use_container_width=True
     )
 
-    # Start Exploring button
+    # ------------------------------------------
+    # Start Exploring Button
+    # ------------------------------------------
+
     if st.button(
         "🚀  Start Exploring",
         use_container_width=True
@@ -69,9 +99,12 @@ def welcome_popup():
 # ==========================================
 
 if "welcome_closed" not in st.session_state:
+
     st.session_state["welcome_closed"] = False
 
+
 if not st.session_state["welcome_closed"]:
+
     welcome_popup()
 
 
