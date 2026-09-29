@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 
+
 # ==========================================
 # PAGE CONFIGURATION
 # ==========================================
@@ -11,6 +12,7 @@ st.set_page_config(
     page_icon="🎯",
     layout="wide"
 )
+
 
 # ==========================================
 # LOAD DATA
@@ -47,6 +49,7 @@ Find the most suitable careers based on your:
 
 The recommendations are generated using the Global Job Market Dataset.
 """)
+
 
 st.divider()
 
@@ -147,18 +150,22 @@ if st.button(
 
 
     # ==========================================
-    # GROUP BY OCCUPATION
+    # CREATE RECOMMENDATION LIST
     # ==========================================
 
     recommendations = []
 
+
+    # ==========================================
+    # PROCESS EACH OCCUPATION
+    # ==========================================
 
     for occupation, group in working.groupby(
         "Occupation"
     ):
 
         # --------------------------------------
-        # EDUCATION MATCH %
+        # EDUCATION MATCH
         # --------------------------------------
 
         education_score = (
@@ -167,7 +174,7 @@ if st.button(
 
 
         # --------------------------------------
-        # EMPLOYMENT MATCH %
+        # EMPLOYMENT MATCH
         # --------------------------------------
 
         employment_score = (
@@ -176,31 +183,34 @@ if st.button(
 
 
         # --------------------------------------
+        # FIND CLOSEST EXPERIENCE
+        # --------------------------------------
+
+        closest_index = (
+            group["ExperienceGap"].idxmin()
+        )
+
+        closest_experience = (
+            group.loc[
+                closest_index,
+                "Experience"
+            ]
+        )
+
+
+        # --------------------------------------
         # EXPERIENCE SCORE
         # --------------------------------------
 
-        # Sort by closest experience
-        closest = group.sort_values(
-            by="ExperienceGap"
+        closest_gap = (
+            group.loc[
+                closest_index,
+                "ExperienceGap"
+            ]
         )
-
-
-        # Use the closest 20% of records
-        # instead of averaging all records
-
-        top_count = max(
-            1,
-            int(len(closest) * 0.20)
-        )
-
-        closest_records = closest.head(
-            top_count
-        )
-
 
         experience_score = (
-            closest_records["ExperienceScore"]
-            .mean()
+            100 / (closest_gap + 1)
         )
 
 
@@ -208,11 +218,15 @@ if st.button(
         # FINAL MATCH SCORE
         # --------------------------------------
 
-        final_score = (
+        match_score = (
 
-            experience_score * 0.50 +
+            experience_score * 0.50
 
-            education_score * 0.30 +
+            +
+
+            education_score * 0.30
+
+            +
 
             employment_score * 0.20
 
@@ -220,48 +234,72 @@ if st.button(
 
 
         # --------------------------------------
-        # OTHER INFORMATION
+        # FIELD
         # --------------------------------------
 
-        field = group["Field"].mode()
+        field_mode = (
+            group["Field"].mode()
+        )
 
-        if not field.empty:
-            field = field.iloc[0]
+        if not field_mode.empty:
+
+            field = field_mode.iloc[0]
+
         else:
+
             field = group["Field"].iloc[0]
 
 
-        country = group["Country"].mode()
+        # --------------------------------------
+        # COUNTRY
+        # --------------------------------------
 
-        if not country.empty:
-            country = country.iloc[0]
+        country_mode = (
+            group["Country"].mode()
+        )
+
+        if not country_mode.empty:
+
+            country = country_mode.iloc[0]
+
         else:
+
             country = group["Country"].iloc[0]
 
 
-        average_experience = (
-            group["Experience"].mean()
-        )
-
+        # --------------------------------------
+        # AVERAGE SALARY
+        # --------------------------------------
 
         average_salary = (
             group["Annual_salary(usd)"].mean()
         )
 
 
+        # --------------------------------------
+        # NUMBER OF JOBS
+        # --------------------------------------
+
         jobs_available = len(group)
 
 
+        # --------------------------------------
+        # STORE RESULT
+        # --------------------------------------
+
         recommendations.append({
 
-            "Occupation": occupation,
+            "Occupation":
+                occupation,
 
-            "Field": field,
+            "Field":
+                field,
 
-            "Country": country,
+            "Country":
+                country,
 
-            "Average_Experience":
-                average_experience,
+            "Closest_Experience":
+                closest_experience,
 
             "Average_Salary":
                 average_salary,
@@ -270,7 +308,7 @@ if st.button(
                 jobs_available,
 
             "Match_Score":
-                final_score,
+                match_score,
 
             "Education_Score":
                 education_score,
@@ -285,7 +323,7 @@ if st.button(
 
 
     # ==========================================
-    # CREATE DATAFRAME
+    # CREATE RECOMMENDATION DATAFRAME
     # ==========================================
 
     recommendation = pd.DataFrame(
@@ -294,11 +332,8 @@ if st.button(
 
 
     # ==========================================
-    # SECONDARY NORMALIZATION
+    # SALARY FACTOR
     # ==========================================
-
-    # Salary is used only as a very small
-    # secondary factor when scores are close.
 
     salary_min = (
         recommendation["Average_Salary"].min()
@@ -334,9 +369,8 @@ if st.button(
     # FINAL SCORE
     # ==========================================
 
-    # Salary has only a 5% influence.
-    # Main recommendation still comes from
-    # the user's three inputs.
+    # 95% comes from user's profile.
+    # 5% comes from salary as a secondary factor.
 
     recommendation["FinalScore"] = (
 
@@ -350,7 +384,7 @@ if st.button(
 
 
     # ==========================================
-    # SORT
+    # SORT RECOMMENDATIONS
     # ==========================================
 
     recommendation = recommendation.sort_values(
@@ -382,12 +416,13 @@ if st.button(
 
 
     # ==========================================
-    # DISPLAY SUCCESS MESSAGE
+    # SUCCESS MESSAGE
     # ==========================================
 
     st.success(
         f"Top {len(recommendation)} Career Recommendations"
     )
+
 
     st.divider()
 
@@ -409,6 +444,10 @@ if st.button(
             col1, col2 = st.columns(2)
 
 
+            # ----------------------------------
+            # LEFT COLUMN
+            # ----------------------------------
+
             with col1:
 
                 st.write(
@@ -427,11 +466,15 @@ if st.button(
                 )
 
 
+            # ----------------------------------
+            # RIGHT COLUMN
+            # ----------------------------------
+
             with col2:
 
                 st.write(
-                    f"**🧑 Average Experience:** "
-                    f"{row['Average_Experience']:.1f} Years"
+                    f"**🧑 Closest Matching Experience:** "
+                    f"{row['Closest_Experience']:.1f} Years"
                 )
 
                 st.write(
@@ -446,12 +489,14 @@ if st.button(
 
 
     # ==========================================
-    # SUMMARY
+    # RECOMMENDATION SUMMARY
     # ==========================================
 
     st.divider()
 
-    st.subheader("📌 Recommendation Summary")
+    st.subheader(
+        "📌 Recommendation Summary"
+    )
 
 
     best = recommendation.iloc[0]
@@ -467,24 +512,25 @@ if st.button(
 
 **Country:** {best['Country']}
 
-**Average Experience:** {best['Average_Experience']:.1f} Years
+**Closest Matching Experience:** {best['Closest_Experience']:.1f} Years
 
 **Average Salary:** ${best['Average_Salary']:,.0f}
 
 **Match Score:** {best['FinalScore']:.1f}%
 
-This recommendation is based on your selected
-education level, employment type and years of
-experience.
+This occupation provides the strongest match
+based on your selected education level,
+employment type and years of experience.
 """
     )
 
 
     # ==========================================
-    # DATA TABLE
+    # RECOMMENDATION TABLE
     # ==========================================
 
     st.divider()
+
 
     display_df = recommendation.rename(
 
@@ -499,8 +545,8 @@ experience.
             "Country":
                 "Country",
 
-            "Average_Experience":
-                "Avg Experience",
+            "Closest_Experience":
+                "Matched Experience",
 
             "Average_Salary":
                 "Avg Salary (USD)",
@@ -517,12 +563,13 @@ experience.
 
 
     st.dataframe(
+
         display_df[
             [
                 "Occupation",
                 "Field",
                 "Country",
-                "Avg Experience",
+                "Matched Experience",
                 "Avg Salary (USD)",
                 "Jobs",
                 "Match Score (%)"
@@ -532,6 +579,7 @@ experience.
         use_container_width=True,
 
         hide_index=True
+
     )
 
 
